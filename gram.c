@@ -27,6 +27,7 @@ void enableRawMode() {
 
     struct termios raw = orig_termios;
 
+    raw.c_iflag &= ~(IXON); // Disable software flow controls
     // Turns off input echoing
     // Bitwise: ~ECHO flips bits, &= clears just the ECHO flag
     raw.c_lflag &= ~(ECHO | ICANON | ISIG); //  ICANON turns off canonical mode
