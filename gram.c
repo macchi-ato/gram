@@ -27,7 +27,7 @@ void enableRawMode() {
 
     // Turns off input echoing
     // Bitwise: ~ECHO flips bits, &= clears just the ECHO flag
-    raw.c_cflag &= ~(ECHO);
+    raw.c_lflag &= ~(ECHO | ICANON); //  ICANON turns off canonical mode
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
