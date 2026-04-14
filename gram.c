@@ -29,7 +29,8 @@ void enableRawMode() {
 
     // Turns off input echoing
     // Bitwise: ~ECHO flips bits, &= clears just the ECHO flag
-    raw.c_lflag &= ~(ECHO | ICANON); //  ICANON turns off canonical mode
+    raw.c_lflag &= ~(ECHO | ICANON | ISIG); //  ICANON turns off canonical mode
+                                            // ISIG turns off ctrl signals like ctrl-c
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
@@ -45,6 +46,6 @@ int main() {
             printf("%d ('%c')\n", c, c);
         }
     }
-    
+
     return 0;
 }
