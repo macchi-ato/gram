@@ -27,11 +27,13 @@ void enableRawMode() {
 
     struct termios raw = orig_termios;
 
-    raw.c_iflag &= ~(IXON); // Disable software flow controls (ctrl-s and ctrl-q)
-    // Turns off input echoing
-    // ICANON turns off canonical mode
+    // IXON software flow controls (ctrl-s and ctrl-q)
+    // ICRNL carriage returns (ctrl-m and enter)
+    raw.c_iflag &= ~(IXON | ICRNL);
+    // Input echoing
+    // ICANON canonical mode
     // IEXTEN disables ctrl-v
-    // ISIG turns off ctrl signals (ctrl-c and ctrl-z)
+    // ISIG ctrl signals (ctrl-c and ctrl-z)
     raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
