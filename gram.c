@@ -27,10 +27,14 @@ void enableRawMode() {
 
     struct termios raw = orig_termios;
 
+    // Turn off terminal flags
+
     // IXON software flow controls (ctrl-s and ctrl-q)
     // ICRNL carriage returns (ctrl-m and enter)
     raw.c_iflag &= ~(IXON | ICRNL);
-    // Input echoing
+    // Output processing
+    raw.c_oflag &= ~(OPOST);
+    // ECHO Input printing 
     // ICANON canonical mode
     // IEXTEN disables ctrl-v
     // ISIG ctrl signals (ctrl-c and ctrl-z)
@@ -45,9 +49,9 @@ int main() {
     char c;
     while (read(STDIN_FILENO, &c, 1) == 1 && c != 'q') {
         if (iscntrl(c)) {
-            printf("%d\n", c);
+            printf("%d\r\n", c);
         } else {
-            printf("%d ('%c')\n", c, c);
+            printf("%d ('%c')\r\n", c, c);
         }
     }
 
