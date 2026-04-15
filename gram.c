@@ -5,30 +5,31 @@
 #include <stdio.h>
 #include <errno.h>
 
-// Terminal attributes global variable
-struct termios orig_termios;
+/* 
+    *
+    *   Data
+    * 
+*/
+
+struct termios orig_termios;    // Terminal attributes global variable
+
+/* 
+    *
+    *   Terminal
+    * 
+*/
 
 void die(const char *s) {
     perror(s);
     exit(1);
 }
 
-/* 
-    *
-    *   Disable raw mode
-    * 
-*/
 void disableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1) {
         die("tcsetattr");
     }
 }
 
-/* 
-    *
-    *   Enable raw mode
-    * 
-*/
 void enableRawMode() {
     // Save current terminal settings into orig_termios
     if (tcgetattr(STDIN_FILENO, &orig_termios) == -1) {
@@ -67,6 +68,12 @@ void enableRawMode() {
         die("tcsetattr");
     }
 }
+
+/* 
+    *
+    *   Init
+    * 
+*/
 
 int main() {
     enableRawMode();
