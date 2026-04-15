@@ -29,9 +29,12 @@ void enableRawMode() {
 
     // Turn off terminal flags
 
-    // IXON software flow controls (ctrl-s and ctrl-q)
+    // BRKINT break condition
     // ICRNL carriage returns (ctrl-m and enter)
-    raw.c_iflag &= ~(IXON | ICRNL);
+    // INPCK parity checking
+    // ISTRIP byte stripping 
+    // IXON software flow controls (ctrl-s and ctrl-q)
+    raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
     // Output processing
     raw.c_oflag &= ~(OPOST);
     // ECHO Input printing 
@@ -39,6 +42,10 @@ void enableRawMode() {
     // IEXTEN disables ctrl-v
     // ISIG ctrl signals (ctrl-c and ctrl-z)
     raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+
+    // Bit mask
+    // Sets character size to 8 bits per byte 
+    raw.c_cflag |= (CS8);
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
