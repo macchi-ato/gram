@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <errno.h>
 
+// Terminal attributes global variable
 struct termios orig_termios;
 
 void die(const char *s) {
