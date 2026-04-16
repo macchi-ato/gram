@@ -100,6 +100,8 @@ void editorRefreshScreen() {
     // 1 start to cursor
     // 0 cursor to end
     write(STDOUT_FILENO, "\x1b[2J", 4);
+    // Cursor position
+    write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
 /* 
