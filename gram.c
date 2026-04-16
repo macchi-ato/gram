@@ -90,6 +90,20 @@ char editorReadKey() {
 
 /* 
     *
+    *   Output
+    * 
+*/
+
+void editorRefreshScreen() {
+    // ANSI escape sequence
+    // 2 clears entire screen
+    // 1 start to cursor
+    // 0 cursor to end
+    write(STDOUT_FILENO, "\x1b[2J", 4);
+}
+
+/* 
+    *
     *   Input
     * 
 */
@@ -114,6 +128,7 @@ int main() {
     enableRawMode();
 
     while (1) {
+        editorRefreshScreen();
         editorProcessKeypress();
     }
 
