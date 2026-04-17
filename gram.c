@@ -28,7 +28,6 @@ struct editorConfig {
 
 struct editorConfig E;
 
-
 /* 
     *
     *   Terminal
