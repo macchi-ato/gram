@@ -96,6 +96,14 @@ char editorReadKey() {
     * 
 */
 
+void editorDrawRows() {
+    int y;
+
+    for (y = 0; y < 24; y++) {
+        write(STDOUT_FILENO, "~\r\n", 3);
+    }
+}
+
 void editorRefreshScreen() {
     // ANSI escape sequence
     // 2 clears entire screen
@@ -103,6 +111,10 @@ void editorRefreshScreen() {
     // 0 cursor to end
     write(STDOUT_FILENO, "\x1b[2J", 4);
     // Cursor position
+    write(STDOUT_FILENO, "\x1b[H", 3);
+
+    editorDrawRows();
+    
     write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
