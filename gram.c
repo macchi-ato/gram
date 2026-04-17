@@ -19,7 +19,12 @@
     * 
 */
 
-struct termios orig_termios;    // Terminal attributes global variable
+struct editorConfig {
+    struct termios orig_termios;    // Terminal attributes
+};
+
+struct editorConfig E;
+
 
 /* 
     *
@@ -35,19 +40,19 @@ void die(const char *s) {
 }
 
 void disableRawMode() {
-    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1) {
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1) {
         die("tcsetattr");
     }
 }
 
 void enableRawMode() {
     // Save current terminal settings into orig_termios
-    if (tcgetattr(STDIN_FILENO, &orig_termios) == -1) {
+    if (tcgetattr(STDIN_FILENO, &E.orig_termios) == -1) {
         die("tcgetattr");
     }
     atexit(disableRawMode);
 
-    struct termios raw = orig_termios;
+    struct termios raw = E.orig_termios;
 
     // Turn off terminal flags
 
