@@ -171,6 +171,9 @@ void editorDrawRows(struct abuf *ab) {
     for (y = 0; y < E.screenrows; y++) {
         abAppend(ab, "~", 1);
 
+        // K command
+        // Erase in line
+        abAppend(ab, "\x1b[K", 3);
         if (y < E.screenrows - 1) {
             abAppend(ab, "\r\n", 2);
         }
@@ -179,13 +182,9 @@ void editorDrawRows(struct abuf *ab) {
 
 void editorRefreshScreen() {
     struct abuf ab = ABUF_INIT;
+    
     // Reset mode
     abAppend(&ab, "\x1b[?25l", 6);
-    // ANSI escape sequence
-    // 2 clears entire screen
-    // 1 start to cursor
-    // 0 cursor to end
-    abAppend(&ab, "\x1b[2J", 4);
     // Cursor position
     abAppend(&ab, "\x1b[H", 3);
 
