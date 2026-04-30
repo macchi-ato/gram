@@ -1,7 +1,7 @@
 #define _DEFAULT_SOURCE
 #define _BSD_SOURCE
 #define _GNU_SOURCE
-    
+
 #include <unistd.h>
 #include <termios.h>
 #include <stdlib.h>
@@ -474,6 +474,13 @@ void editorProcessKeypress() {
         case PAGE_UP:
         case PAGE_DOWN:
             {
+                if (c == PAGE_UP) {
+                    E.cy = E.rowoff;
+                } else if (c == PAGE_DOWN) {
+                    E.cy = E.rowoff + E.screenrows - 1;
+                    if (E.cy > E.numrows) E.cy = E.numrows;
+                }
+
                 int times = E.screenrows;
                 while (times--)
                     editorMoveCursor(c == PAGE_UP ? ARROW_UP : ARROW_DOWN);
@@ -523,4 +530,4 @@ int main(int argc, char *argv[]) {
 }
 
 // Where I left of
-// Snap cursor to end of line
+// Scrolling with Page up and Page Down
